@@ -46,7 +46,12 @@ body {
     opacity: 0.7;
 }
 
-.list__item-child {
+.actions {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.list__item:last-child {
     margin-bottom: 0;
 }
 
@@ -58,15 +63,10 @@ body {
     height: 32px;
     min-width: 64px;
     border: 3px solid #ccc;
-    outline: none;
-    cursor: pointer;
     border-radius: 8px;
+    background-color: #ffffff;
     margin-left: 16px;
-}
-
-.actions {
-    display: flex;
-    margin-bottom: 8px;
+    cursor: pointer;
 }
 
 .task-input {
@@ -74,4 +74,26 @@ body {
     border: 3px solid #ccc;
     border-radius: 8px;
     flex: 1;
+}
+
+.delete-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    margin-left: auto;
+    text-decoration: none;
+    padding: 0;
+    transform: rotate(45deg);
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.delete-btn::before {
+    content: "+";
 }
