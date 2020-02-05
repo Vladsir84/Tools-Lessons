@@ -1,0 +1,23 @@
+{
+    "name": "task2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest -w",
+        "copy:styles": "cp styles.css ./dist/styles.css",
+        "copy:html": "cp index.html ./dist/index.html",
+        "copy:scripts": "cp -R ./scripts ./dist/scripts",
+        "clean": "rm -rf ./dist",
+        "build": "npm-run-all clean copy:*"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/preset-env": "^7.8.4",
+        "jest": "^25.1.0",
+        "npm-run-all": "^4.1.5"
+    }
+}
