@@ -1,23 +1,20 @@
-import "core-js/modules/es.array.concat";
-import "core-js/modules/es.array.includes";
-import "core-js/modules/es.regexp.exec";
-import "core-js/modules/es.string.split";
+import "core-js/modules/web.dom-collections.iterator";
 import { calendarRendering } from './calendar-visualization.js';
 import { arrOfEvents, getFromLocalStorage } from './storage.js';
 import { renderEvents } from './slots-logic.js';
 import { redLine } from './red-line.js';
 import { activeEventOnclick } from './edit-event.js';
-var dayNumbers = document.querySelectorAll('.day-number');
-var dates = document.querySelector('.dates');
-export var arrayOfDates = [];
+let dayNumbers = document.querySelectorAll('.day-number');
+let dates = document.querySelector('.dates');
+export let arrayOfDates = [];
 export function createDates() {
-  var currentDayOfWeek = new Date().getDay();
+  let currentDayOfWeek = new Date().getDay();
 
-  for (var i = 0; i < 7; i++) {
+  for (let i = 0; i < 7; i++) {
     if (i < currentDayOfWeek) {
-      var currentDate = new Date();
-      var day = currentDate.getDate() - (i + 1);
-      var previosDate = currentDate.setDate(day);
+      let currentDate = new Date();
+      let day = currentDate.getDate() - (i + 1);
+      let previosDate = currentDate.setDate(day);
       arrayOfDates.unshift(new Date(previosDate));
     }
 
@@ -26,20 +23,17 @@ export function createDates() {
     }
 
     if (i > currentDayOfWeek) {
-      var _currentDate = new Date();
-
-      var _day = _currentDate.getDate() + (i - _currentDate.getDay());
-
-      var _previosDate = _currentDate.setDate(_day);
-
-      arrayOfDates.push(new Date(_previosDate));
+      let currentDate = new Date();
+      let day = currentDate.getDate() + (i - currentDate.getDay());
+      let previosDate = currentDate.setDate(day);
+      arrayOfDates.push(new Date(previosDate));
     }
   }
 }
 ;
 export function renderDates() {
-  for (var i = 0; i < 7; i++) {
-    var content = (arrayOfDates[i] + '').split(' ')[2];
+  for (let i = 0; i < 7; i++) {
+    let content = (arrayOfDates[i] + '').split(' ')[2];
     dayNumbers[i].innerHTML = content;
 
     if ((arrayOfDates[i] + '').split(' ')[2] === (new Date() + '').split(' ')[2]) {
@@ -50,11 +44,9 @@ export function renderDates() {
   }
 
   showCurrentMonthAndYear();
-  var clear = document.querySelectorAll('.active_event');
+  let clear = document.querySelectorAll('.active_event');
 
-  for (var _i = 0; _i < clear.length; _i++) {
-    clear[_i].remove();
-  }
+  for (let i = 0; i < clear.length; i++) clear[i].remove();
 
   renderEvents(arrOfEvents);
   activeEventOnclick();
@@ -62,68 +54,66 @@ export function renderDates() {
 }
 ;
 export function showCurrentMonthAndYear() {
-  var arrOfMonth = [];
-  var arrOfYears = [];
-  var resultMonth = [];
-  var resultYears = [];
+  let arrOfMonth = [];
+  let arrOfYears = [];
+  let resultMonth = [];
+  let resultYears = [];
 
-  for (var i = 0; i < arrayOfDates.length; i++) {
+  for (let i = 0; i < arrayOfDates.length; i++) {
     arrOfMonth.push((arrayOfDates[i] + '').split(' ')[1]);
     arrOfYears.push((arrayOfDates[i] + '').split(' ')[3]);
   }
 
-  for (var _i2 = 0, _arrOfMonth = arrOfMonth; _i2 < _arrOfMonth.length; _i2++) {
-    var str = _arrOfMonth[_i2];
+  for (let str of arrOfMonth) {
     if (!resultMonth.includes(str)) resultMonth.push(str);
   }
 
-  for (var _i3 = 0, _arrOfYears = arrOfYears; _i3 < _arrOfYears.length; _i3++) {
-    var _str = _arrOfYears[_i3];
-    if (!resultYears.includes(_str)) resultYears.push(_str);
+  for (let str of arrOfYears) {
+    if (!resultYears.includes(str)) resultYears.push(str);
   }
 
   if (resultYears.length == 1) {
-    dates.innerHTML = "".concat(resultMonth[0], " ").concat(resultYears[0]);
+    dates.innerHTML = `${resultMonth[0]} ${resultYears[0]}`;
   } else {
-    dates.innerHTML = "".concat(resultMonth[0], " ").concat(resultYears[0], " - ").concat(resultMonth[1], " ").concat(resultYears[1]);
+    dates.innerHTML = `${resultMonth[0]} ${resultYears[0]} - ${resultMonth[1]} ${resultYears[1]}`;
   }
 }
 ;
 createDates();
 renderDates();
-var arrow_button__next = document.querySelector('.arrow-button__next');
-var arrow_button__prev = document.querySelector('.arrow-button__prev');
+let arrow_button__next = document.querySelector('.arrow-button__next');
+let arrow_button__prev = document.querySelector('.arrow-button__prev');
 export function renderNextWeek() {
-  for (var i = 0; i < 7; i++) {
-    var nextDate = arrayOfDates[i].getDate() + 7;
+  for (let i = 0; i < 7; i++) {
+    let nextDate = arrayOfDates[i].getDate() + 7;
     nextDate = new Date(arrayOfDates[i]).setDate(nextDate);
     arrayOfDates[i] = new Date(nextDate);
   }
 
   renderDates();
   calendarRendering();
-  var redLineElement = document.querySelector('.redLine');
+  let redLineElement = document.querySelector('.redLine');
   if (redLineElement !== null) redLineElement.remove('div');
   redLine();
 }
 ;
 export function renderPreviousWeek() {
-  for (var i = 0; i < 7; i++) {
-    var nextDate = arrayOfDates[i].getDate() - 7;
+  for (let i = 0; i < 7; i++) {
+    let nextDate = arrayOfDates[i].getDate() - 7;
     nextDate = new Date(arrayOfDates[i]).setDate(nextDate);
     arrayOfDates[i] = new Date(nextDate);
   }
 
   renderDates();
   calendarRendering();
-  var redLineElement = document.querySelector('.redLine');
+  let redLineElement = document.querySelector('.redLine');
   if (redLineElement !== null) redLineElement.remove('div');
   redLine();
 }
 ;
 arrow_button__prev.addEventListener('click', renderPreviousWeek);
 arrow_button__next.addEventListener('click', renderNextWeek);
-var today_button = document.querySelector('.today-button');
+let today_button = document.querySelector('.today-button');
 export function today_button_function() {
   arrayOfDates = [];
   createDates();

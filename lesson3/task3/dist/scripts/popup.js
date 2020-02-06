@@ -1,56 +1,51 @@
-import "core-js/modules/es.array.concat";
-import "core-js/modules/es.regexp.exec";
-import "core-js/modules/es.string.split";
 import { createTemporaryCell } from './temporary-cell.js';
 import { calendarRendering } from './calendar-visualization.js';
-var startDate = document.querySelector('.start-date');
-var startTime = document.querySelector('.start-time');
-var endTime = document.querySelector('.end-time');
-var endDate = document.querySelector('.end-date');
-var color = document.querySelector('.event__color-picker');
+let startDate = document.querySelector('.start-date');
+let startTime = document.querySelector('.start-time');
+let endTime = document.querySelector('.end-time');
+let endDate = document.querySelector('.end-date');
+let color = document.querySelector('.event__color-picker');
 
 function dateToString(date) {
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
   month = month < 10 ? '0' + month : month;
-  var day = date.getDate();
+  let day = date.getDate();
   day = day < 10 ? '0' + day : day;
-  return "".concat(year, "-").concat(month, "-").concat(day);
+  return `${year}-${month}-${day}`;
 }
 
 ;
 
 function timeToString(date) {
-  var hour = date.getHours();
+  let hour = date.getHours();
   hour = hour < 10 ? '0' + hour : hour;
-  var minute = date.getMinutes();
+  let minute = date.getMinutes();
   minute = minute < 10 ? '0' + minute : minute;
-  return "".concat(hour, ":").concat(minute);
+  return `${hour}:${minute}`;
 }
 
-export var addButton = function addButton(event) {
+export const addButton = event => {
   if (event.target.classList.value === 'emptyCell') {
     createTemporaryCell(event.target);
-    var popup = document.querySelector(".popup");
+    const popup = document.querySelector(`.popup`);
     popup.classList.add('popup-switch');
-    var defaultBackgroundColor = document.querySelector('.event__color-picker');
+    const defaultBackgroundColor = document.querySelector('.event__color-picker');
     defaultBackgroundColor.value = '#4183f1'; // вставляем время в попап
 
     startTime.value = event.target.closest('.emptyRow').dataset.time + '';
     endTime.value = event.target.closest('.emptyRow').dataset.time + ''; // вставляем дату в попап
 
-    var month = document.querySelector('.dates').innerHTML.split(' ')[0];
-    var startMonth = '01';
-    var year = document.querySelector('.dates').innerHTML.split(' ')[1];
-    var startYear = year;
-    var startDay = event.target.dataset.date;
-    startDate.value = "".concat(startYear, "-").concat(startMonth, "-").concat(startDay);
-    endDate.value = "".concat(startYear, "-").concat(startMonth, "-").concat(startDay);
+    let month = document.querySelector('.dates').innerHTML.split(' ')[0];
+    let startMonth = '01';
+    let year = document.querySelector('.dates').innerHTML.split(' ')[1];
+    let startYear = year;
+    let startDay = event.target.dataset.date;
+    startDate.value = `${startYear}-${startMonth}-${startDay}`;
+    endDate.value = `${startYear}-${startMonth}-${startDay}`;
   } else {
-    var _popup = document.querySelector(".popup");
-
-    _popup.classList.add('popup-switch');
-
+    const popup = document.querySelector(`.popup`);
+    popup.classList.add('popup-switch');
     startDate.value = dateToString(new Date());
     endDate.value = dateToString(new Date());
     startTime.value = timeToString(new Date());
@@ -59,17 +54,17 @@ export var addButton = function addButton(event) {
   // defaultBackgroundColor.value = '#4183f1';
 
 };
-var popupWindow = document.querySelector(".calendar-visualization");
-var btnCreate = document.querySelector('.create-button'); // const defaultBackgroundColor = document.querySelector('.event__color-picker');
+const popupWindow = document.querySelector(`.calendar-visualization`);
+const btnCreate = document.querySelector('.create-button'); // const defaultBackgroundColor = document.querySelector('.event__color-picker');
 // defaultBackgroundColor.value = '#4183f1';
 
 popupWindow.addEventListener('click', addButton);
 btnCreate.addEventListener('click', addButton);
-var closeButton = document.querySelector('.close');
+let closeButton = document.querySelector('.close');
 
 closeButton.onclick = function () {
   event.preventDefault();
-  var popup = document.querySelector(".popup");
+  const popup = document.querySelector(`.popup`);
   popup.classList.remove('popup-switch');
   calendarRendering();
 };

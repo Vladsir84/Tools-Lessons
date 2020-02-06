@@ -1,5 +1,5 @@
 import { renderDates } from './navigation.js';
-export var arrOfEvents = [];
+export let arrOfEvents = [];
 export function getFromLocalStorage() {
   arrOfEvents = localStorage.getItem('storage') ? JSON.parse(localStorage.getItem('storage')) : [];
 }

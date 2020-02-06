@@ -1,11 +1,10 @@
-import "core-js/modules/es.array.map";
 import { arrOfEvents } from './storage.js';
 export function validate(start, end) {
   if (!errorDate(start, end) || !duration(start, end) || !checkForUpdate(start) || !checkEvent()) return false;
 }
-var sixHourInMs = 21600000;
-var fifteenMinInMs = 900000;
-export var errorDate = function errorDate(start, end) {
+let sixHourInMs = 21600000;
+let fifteenMinInMs = 900000;
+export const errorDate = (start, end) => {
   if (end < start) {
     alert('error');
     return false;
@@ -18,7 +17,7 @@ export var errorDate = function errorDate(start, end) {
 
   return true;
 };
-export var duration = function duration(start, end) {
+export const duration = (start, end) => {
   if (end.getHours() - start.getHours() > 6) {
     alert('You cannot create an event longer than 6 hours');
     return false;
@@ -31,8 +30,8 @@ export var duration = function duration(start, end) {
 
   return true;
 };
-export var checkForUpdate = function checkForUpdate(start) {
-  var now = new Date(); // if (start - now < 0) return true;
+export const checkForUpdate = start => {
+  const now = new Date(); // if (start - now < 0) return true;
 
   if (start - now.getTime() < fifteenMinInMs) {
     alert('you cannot delete/update event 15 minutes before the start');
@@ -41,20 +40,20 @@ export var checkForUpdate = function checkForUpdate(start) {
 
   return true;
 };
-export var checkEvent = function checkEvent() {
-  var inputName = document.querySelector('.input__name');
-  var startDate = document.querySelector(".start-date");
-  var startTime = document.querySelector('.start-time');
-  var endDate = document.querySelector(".end-date");
-  var endTime = document.querySelector('.end-time');
-  var inputDescription = document.querySelector('.description-input');
-  var newEventStart = new Date(startDate.value + 'T' + startTime.value);
-  var newEventEnd = new Date(endDate.value + 'T' + endTime.value);
-  var selectedId;
+export const checkEvent = () => {
+  let inputName = document.querySelector('.input__name');
+  const startDate = document.querySelector(`.start-date`);
+  const startTime = document.querySelector('.start-time');
+  const endDate = document.querySelector(`.end-date`);
+  const endTime = document.querySelector('.end-time');
+  let inputDescription = document.querySelector('.description-input');
+  let newEventStart = new Date(startDate.value + 'T' + startTime.value);
+  let newEventEnd = new Date(endDate.value + 'T' + endTime.value);
+  let selectedId;
 
-  for (var i = 0; i < arrOfEvents.length - 1; i++) {
-    var eventStart = new Date(arrOfEvents[i].startDate);
-    var eventEnd = new Date(arrOfEvents[i].endDate);
+  for (let i = 0; i < arrOfEvents.length - 1; i++) {
+    let eventStart = new Date(arrOfEvents[i].startDate);
+    let eventEnd = new Date(arrOfEvents[i].endDate);
 
     if (startDate.value + 'T' + startTime.value == arrOfEvents[i].startDate) {
       if (arrOfEvents[i].id == selectedId) return true;
@@ -74,25 +73,25 @@ export var checkEvent = function checkEvent() {
   }
 
   ;
-  var closestBeginLeft;
-  var closestBeginRight;
-  var closestEndLeft;
-  var closestEndRight;
-  var beginEv = [];
-  var endEv = [];
-  var popupBegin = new Date(startDate.value + 'T' + startTime.value);
-  var popupEnd = new Date(endDate.value + 'T' + endTime.value);
-  var currentBegin;
-  var currentEnd;
-  arrOfEvents.map(function (arg) {
+  let closestBeginLeft;
+  let closestBeginRight;
+  let closestEndLeft;
+  let closestEndRight;
+  let beginEv = [];
+  let endEv = [];
+  let popupBegin = new Date(startDate.value + 'T' + startTime.value);
+  let popupEnd = new Date(endDate.value + 'T' + endTime.value);
+  let currentBegin;
+  let currentEnd;
+  arrOfEvents.map(arg => {
     beginEv.push(new Date(arg.startDate));
     endEv.push(new Date(arg.endDate));
   });
 
-  var getClosestEvent = function getClosestEvent() {
-    for (var _i = 0; _i < beginEv.length; _i++) {
-      currentBegin = beginEv[_i];
-      currentEnd = endEv[_i];
+  const getClosestEvent = () => {
+    for (let i = 0; i < beginEv.length; i++) {
+      currentBegin = beginEv[i];
+      currentEnd = endEv[i];
 
       if (currentBegin < popupBegin && (typeof closestBeginLeft === 'undefined' || closestBeginLeft < currentBegin)) {
         closestBeginLeft = currentBegin;
