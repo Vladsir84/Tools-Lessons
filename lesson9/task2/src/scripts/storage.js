@@ -1,20 +1,20 @@
-import { renderDates } from './navigation.js';
+import { renderDates } from './navigation';
 
 export let arrOfEvents = [];
 
 export function getFromLocalStorage() {
-    arrOfEvents = localStorage.getItem('storage') ? JSON.parse(localStorage.getItem('storage')) : [];
-};
+  arrOfEvents = localStorage.getItem('storage') ? JSON.parse(localStorage.getItem('storage')) : [];
+}
 
 export function savetoLocalStorage() {
-    localStorage.setItem('storage', JSON.stringify(arrOfEvents));
-};
+  localStorage.setItem('storage', JSON.stringify(arrOfEvents));
+}
 
 export function onStorageChange(event) {
-    if (event.key == 'storage') {
-        arrOfEvents = localStorage.getItem('storage') ? JSON.parse(localStorage.getItem('storage')) : []
-        renderDates();
-    }
+  if (event.key === 'storage') {
+    arrOfEvents = localStorage.getItem('storage') ? JSON.parse(localStorage.getItem('storage')) : [];
+    renderDates();
+  }
 }
 
 window.addEventListener('storage', onStorageChange);
